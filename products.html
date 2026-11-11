@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooms Flower Shop - Products</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="products.html" class="active"><i class="fa-solid fa-spa"></i> Products</a>
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        <a href="orders.html"><i class="fa-solid fa-truck-ramp-box"></i> Track Order</a>
+        <a href="login.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+        <a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+    </nav>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-seedling"></i> Our Handcrafted Arrangements</h1>
+        <p class="subtitle">Beautiful, eternal blooms for every occasion.</p>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_6fb81b.jpg" alt="Velvet Rose Bouquet">
+                </div>
+                <h3>Velvet Rose Bouquet</h3>
+                <p class="price">₱1,200.00</p>
+                <button class="btn" onclick="addToCart('Velvet Rose Bouquet', 1200, 'image_6fb81b.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_6fbb67.jpg" alt="Purple Tulip Dream">
+                </div>
+                <h3>Purple Tulip Dream</h3>
+                <p class="price">₱1,450.00</p>
+                <button class="btn" onclick="addToCart('Purple Tulip Dream', 1450, 'image_6fbb67.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_6fbbfd.jpg" alt="Pastel Ribbon Mix">
+                </div>
+                <h3>Pastel Ribbon Mix</h3>
+                <p class="price">₱1,600.00</p>
+                <button class="btn" onclick="addToCart('Pastel Ribbon Mix', 1600, 'image_6fbbfd.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_799a43.jpg" alt="Classic Red Rose Wrap">
+                </div>
+                <h3>Classic Red Rose Wrap</h3>
+                <p class="price">₱1,350.00</p>
+                <button class="btn" onclick="addToCart('Classic Red Rose Wrap', 1350, 'image_799a43.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_799d64.jpg" alt="Elegant Pink Lily Arrangement">
+                </div>
+                <h3>Pink Lily Arrangement</h3>
+                <p class="price">₱1,800.00</p>
+                <button class="btn" onclick="addToCart('Pink Lily Arrangement', 1800, 'image_799d64.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="image_7999c4.jpg" alt="Sunshine Sunflower Bouquet">
+                </div>
+                <h3>Sunshine Sunflower Bouquet</h3>
+                <p class="price">₱1,500.00</p>
+                <button class="btn" onclick="addToCart('Sunshine Sunflower Bouquet', 1500, 'image_7999c4.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blooms Flower Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

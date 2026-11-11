@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooms Flower Shop - Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="products.html"><i class="fa-solid fa-spa"></i> Products</a>
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        <a href="orders.html"><i class="fa-solid fa-truck-ramp-box"></i> Track Order</a>
+        <a href="login.html" class="active"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+        <a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+    </nav>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-id-card"></i> Customer Profile</h1>
+        <p class="subtitle">Manage your personal details, delivery addresses, and account preferences.</p>
+
+        <div class="form-card">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #fce4ec; padding-bottom: 10px;">
+                <button type="button" class="btn" id="tab-login-btn" style="flex: 1; margin: 0;" onclick="switchTab('login')"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+                <button type="button" class="btn btn-secondary" id="tab-register-btn" style="flex: 1; margin: 0;" onclick="switchTab('register')"><i class="fa-solid fa-user-plus"></i> Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-email"><i class="fa-solid fa-at"></i> Email Address</label>
+                    <input type="email" id="login-email" required placeholder="jane@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin: 0;"><i class="fa-solid fa-right-to-bracket"></i> Log In</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="reg-name"><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="reg-name" required placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email"><i class="fa-solid fa-at"></i> Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="jane@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="reg-phone" required placeholder="09123456789">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="reg-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin: 0;"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+            </form>
+
+            <!-- Logged In Profile Dashboard (Personal Info + Delivery Details) -->
+            <div id="userProfile" style="display: none;">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="font-size: 55px; color: #d81b60; margin-bottom: 5px;">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </div>
+                    <h2 id="user-display-name" style="color: #880e4f;">Welcome!</h2>
+                    <p id="user-display-email" style="color: #666;"></p>
+                </div>
+
+                <!-- Personal Information & Address Form -->
+                <form id="profileDetailsForm">
+                    <h3 style="color: #880e4f; margin-bottom: 15px; font-size: 1.1rem; border-bottom: 2px solid #fce4ec; padding-bottom: 8px;">
+                        <i class="fa-solid fa-address-card"></i> Personal Details & Delivery Info
+                    </h3>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="prof-fullname"><i class="fa-solid fa-user"></i> Full Name</label>
+                            <input type="text" id="prof-fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prof-phone"><i class="fa-solid fa-phone"></i> Contact Number</label>
+                            <input type="tel" id="prof-phone" placeholder="09123456789" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prof-address"><i class="fa-solid fa-location-dot"></i> Primary Delivery Address</label>
+                        <input type="text" id="prof-address" placeholder="123 Sampaguita St., Brgy. Central, Manila">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="prof-city"><i class="fa-solid fa-city"></i> City / Province</label>
+                            <input type="text" id="prof-city" placeholder="Metro Manila">
+                        </div>
+                        <div class="form-group">
+                            <label for="prof-zip"><i class="fa-solid fa-map-pin"></i> Zip Code</label>
+                            <input type="text" id="prof-zip" placeholder="1000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prof-notes"><i class="fa-solid fa-heart"></i> Favorite Flower Preference / Special Notes</label>
+                        <textarea id="prof-notes" placeholder="e.g. Loves pink satin roses, prefers morning deliveries" style="height: 70px;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin: 0 0 15px 0;"><i class="fa-solid fa-floppy-disk"></i> Save Profile Details</button>
+                </form>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="orders.html" class="btn btn-secondary" style="width: 100%; margin: 0 0 10px 0; text-align: center; justify-content: center;"><i class="fa-solid fa-truck-fast"></i> View Order Tracking History</a>
+                    <button class="btn btn-secondary" onclick="logoutCustomer()" style="width: 100%; margin: 0;"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+                </div>
+            </div>
+
+            <div id="authFeedback" style="display: none; margin-top: 15px; padding: 10px; border-radius: 6px; text-align: center;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blooms Flower Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLoginBtn = document.getElementById('tab-login-btn');
+            const tabRegisterBtn = document.getElementById('tab-register-btn');
+            const feedback = document.getElementById('authFeedback');
+
+            feedback.style.display = 'none';
+
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                tabLoginBtn.className = 'btn';
+                tabRegisterBtn.className = 'btn btn-secondary';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                tabLoginBtn.className = 'btn btn-secondary';
+                tabRegisterBtn.className = 'btn';
+            }
+        }
+
+        function checkUserSession() {
+            const currentUser = JSON.parse(localStorage.getItem('bloomsUser'));
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userProfile = document.getElementById('userProfile');
+            const tabBtns = document.querySelector('.form-card > div');
+
+            if (currentUser) {
+                if (tabBtns) tabBtns.style.display = 'none';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+                userProfile.style.display = 'block';
+
+                document.getElementById('user-display-name').innerText = currentUser.name;
+                document.getElementById('user-display-email').innerText = currentUser.email;
+
+                // Load Personal Profile Details
+                document.getElementById('prof-fullname').value = currentUser.name || '';
+                document.getElementById('prof-phone').value = currentUser.phone || '';
+                document.getElementById('prof-address').value = currentUser.address || '';
+                document.getElementById('prof-city').value = currentUser.city || '';
+                document.getElementById('prof-zip').value = currentUser.zip || '';
+                document.getElementById('prof-notes').value = currentUser.notes || '';
+            } else {
+                if (tabBtns) tabBtns.style.display = 'flex';
+                userProfile.style.display = 'none';
+                switchTab('login');
+            }
+        }
+
+        document.getElementById('profileDetailsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let currentUser = JSON.parse(localStorage.getItem('bloomsUser'));
+            if (!currentUser) return;
+
+            currentUser.name = document.getElementById('prof-fullname').value;
+            currentUser.phone = document.getElementById('prof-phone').value;
+            currentUser.address = document.getElementById('prof-address').value;
+            currentUser.city = document.getElementById('prof-city').value;
+            currentUser.zip = document.getElementById('prof-zip').value;
+            currentUser.notes = document.getElementById('prof-notes').value;
+
+            localStorage.setItem('bloomsUser', JSON.stringify(currentUser));
+
+            // Also update registered users list
+            let users = JSON.parse(localStorage.getItem('bloomsRegisteredUsers')) || [];
+            const idx = users.findIndex(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
+            if (idx > -1) {
+                users[idx] = currentUser;
+            } else {
+                users.push(currentUser);
+            }
+            localStorage.setItem('bloomsRegisteredUsers', JSON.stringify(users));
+
+            showCenterToast('<i class="fa-solid fa-circle-check" style="color: #4caf50;"></i> Personal details and delivery info saved successfully!');
+            checkUserSession();
+            if (typeof updateNavUserStatus === 'function') updateNavUserStatus();
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const users = JSON.parse(localStorage.getItem('bloomsRegisteredUsers')) || [];
+            
+            let user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+            
+            if (!user) {
+                user = { name: email.split('@')[0], email: email, phone: '', address: '', city: '', zip: '', notes: '' };
+                users.push(user);
+                localStorage.setItem('bloomsRegisteredUsers', JSON.stringify(users));
+            }
+            
+            localStorage.setItem('bloomsUser', JSON.stringify(user));
+            checkUserSession();
+            if (typeof updateNavUserStatus === 'function') updateNavUserStatus();
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+
+            const users = JSON.parse(localStorage.getItem('bloomsRegisteredUsers')) || [];
+            const newUser = { name, email, phone, address: '', city: '', zip: '', notes: '' };
+            
+            users.push(newUser);
+            localStorage.setItem('bloomsRegisteredUsers', JSON.stringify(users));
+            localStorage.setItem('bloomsUser', JSON.stringify(newUser));
+            
+            checkUserSession();
+            if (typeof updateNavUserStatus === 'function') updateNavUserStatus();
+        });
+
+        function logoutCustomer() {
+            localStorage.removeItem('bloomsUser');
+            checkUserSession();
+            if (typeof updateNavUserStatus === 'function') updateNavUserStatus();
+        }
+
+        checkUserSession();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

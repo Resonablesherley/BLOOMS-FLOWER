@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooms Flower Shop - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="products.html"><i class="fa-solid fa-spa"></i> Products</a>
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        <a href="orders.html"><i class="fa-solid fa-truck-ramp-box"></i> Track Order</a>
+        <a href="login.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+        <a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1><i class="fa-solid fa-heart"></i> Welcome to Blooms Flower Shop</h1>
+            <p>Handcrafted satin ribbon and fuzzy wire flower arrangements designed to last a lifetime.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
+                <a href="products.html" class="btn" style="margin: 0;"><i class="fa-solid fa-bag-shopping"></i> Explore Collection</a>
+                <a href="orders.html" class="btn btn-secondary" style="margin: 0;"><i class="fa-solid fa-magnifying-glass-location"></i> Track Order</a>
+            </div>
+        </div>
+
+        <!-- Featured Products Section -->
+        <div style="margin-top: 45px;">
+            <h2 style="text-align: center; color: #880e4f; margin-bottom: 5px;"><i class="fa-solid fa-star" style="color: #ffb300;"></i> Featured Bouquet Collection</h2>
+            <p class="subtitle">Our top customer favorites rated 5 stars</p>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="image_6fb81b.jpg" alt="Velvet Rose Bouquet">
+                    </div>
+                    <h3>Velvet Rose Bouquet</h3>
+                    <div style="color: #ffb300; margin: 0 15px 5px 15px; font-size: 14px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span style="color: #777; font-size: 12px; margin-left: 4px;">(5.0)</span>
+                    </div>
+                    <p class="price">₱1,200.00</p>
+                    <button class="btn" onclick="addToCart('Velvet Rose Bouquet', 1200, 'image_6fb81b.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="image_6fbb67.jpg" alt="Purple Tulip Dream">
+                    </div>
+                    <h3>Purple Tulip Dream</h3>
+                    <div style="color: #ffb300; margin: 0 15px 5px 15px; font-size: 14px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span style="color: #777; font-size: 12px; margin-left: 4px;">(5.0)</span>
+                    </div>
+                    <p class="price">₱1,450.00</p>
+                    <button class="btn" onclick="addToCart('Purple Tulip Dream', 1450, 'image_6fbb67.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="image_6fbbfd.jpg" alt="Pastel Ribbon Mix">
+                    </div>
+                    <h3>Pastel Ribbon Mix</h3>
+                    <div style="color: #ffb300; margin: 0 15px 5px 15px; font-size: 14px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span style="color: #777; font-size: 12px; margin-left: 4px;">(5.0)</span>
+                    </div>
+                    <p class="price">₱1,600.00</p>
+                    <button class="btn" onclick="addToCart('Pastel Ribbon Mix', 1600, 'image_6fbbfd.jpg', this)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Reviews & Submission Section -->
+        <div style="margin-top: 50px;" class="reviews-section">
+            <h2 style="text-align: center; color: #880e4f; margin-bottom: 5px;"><i class="fa-solid fa-comments"></i> 5-Star Customer Reviews</h2>
+            <p class="subtitle">What our happy clients say about our handcrafted blooms</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+                <!-- Review List -->
+                <div id="reviews-list" style="display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Dynamically rendered via JS -->
+                </div>
+
+                <!-- Add Review Form -->
+                <div class="form-card" style="margin: 0; width: 100%;">
+                    <h3 style="color: #880e4f; margin-bottom: 15px;"><i class="fa-solid fa-pen-to-square"></i> Leave a Review</h3>
+                    <form onsubmit="submitCustomerReview(event)">
+                        <div class="form-group">
+                            <label for="rev-name"><i class="fa-solid fa-user"></i> Your Name</label>
+                            <input type="text" id="rev-name" placeholder="Jane Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rev-rating"><i class="fa-solid fa-star" style="color: #ffb300;"></i> Rating</label>
+                            <select id="rev-rating" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                                <option value="5">★★★★★ (5 Stars - Excellent)</option>
+                                <option value="4">★★★★☆ (4 Stars - Great)</option>
+                                <option value="3">★★★☆☆ (3 Stars - Good)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rev-text"><i class="fa-solid fa-comment"></i> Your Review</label>
+                            <textarea id="rev-text" required placeholder="Write your feedback about our flowers..." style="height: 90px;"></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%; margin: 0;"><i class="fa-solid fa-paper-plane"></i> Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blooms Flower Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

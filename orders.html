@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooms Flower Shop - Order Tracking</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="products.html"><i class="fa-solid fa-spa"></i> Products</a>
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        <a href="orders.html" class="active"><i class="fa-solid fa-truck-ramp-box"></i> Track Order</a>
+        <a href="login.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+        <a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+    </nav>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-truck-fast"></i> Track Your Order & Order History</h1>
+        <p class="subtitle">Search your 6-digit Order ID or view your recent order history below.</p>
+
+        <!-- Search Order Bar -->
+        <div class="form-card" style="margin-bottom: 30px;">
+            <form id="trackOrderForm">
+                <div class="form-group">
+                    <label for="order-id-input"><i class="fa-solid fa-magnifying-glass"></i> Order ID Number</label>
+                    <input type="text" id="order-id-input" required placeholder="e.g. 482910">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin: 0;"><i class="fa-solid fa-location-crosshairs"></i> Track Order</button>
+            </form>
+        </div>
+
+        <!-- Order Result Card -->
+        <div id="orderResultCard" class="form-card" style="display: none; margin-bottom: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #fce4ec; padding-bottom: 12px; margin-bottom: 15px;">
+                <h2 style="color: #880e4f; font-size: 1.2rem;"><i class="fa-solid fa-receipt"></i> Order <span id="res-order-id">#000000</span></h2>
+                <span id="res-order-date" style="color: #666; font-size: 14px;"></span>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <p><strong>Customer:</strong> <span id="res-customer-name"></span> (<span id="res-customer-email"></span>)</p>
+                <p style="margin-top: 5px;"><strong>Status:</strong> <span id="res-order-status" style="color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 3px 8px; border-radius: 4px;"><i class="fa-solid fa-truck"></i> Processing</span></p>
+            </div>
+
+            <!-- Visual Progress Tracker -->
+            <div style="display: flex; justify-content: space-between; position: relative; margin: 30px 0 25px 0;">
+                <div style="text-align: center; z-index: 2; flex: 1;">
+                    <div style="width: 35px; height: 35px; border-radius: 50%; background: #d81b60; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto;"><i class="fa-solid fa-check"></i></div>
+                    <span style="font-size: 12px; font-weight: bold;">Order Placed</span>
+                </div>
+                <div style="text-align: center; z-index: 2; flex: 1;">
+                    <div style="width: 35px; height: 35px; border-radius: 50%; background: #d81b60; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <span style="font-size: 12px; font-weight: bold;">Crafting Blooms</span>
+                </div>
+                <div style="text-align: center; z-index: 2; flex: 1;">
+                    <div style="width: 35px; height: 35px; border-radius: 50%; background: #e0e0e0; color: #666; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto;"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                    <span style="font-size: 12px; color: #666;">Out for Delivery</span>
+                </div>
+            </div>
+
+            <h3 style="color: #880e4f; font-size: 1rem; margin-bottom: 10px;"><i class="fa-solid fa-boxes-packing"></i> Order Items</h3>
+            <div id="res-order-items" style="background: #faf5f7; padding: 12px; border-radius: 8px; margin-bottom: 15px;"></div>
+
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; color: #880e4f;">
+                <span>Total Amount:</span>
+                <span id="res-order-total">₱0.00</span>
+            </div>
+        </div>
+
+        <div id="noOrderFound" class="form-card" style="display: none; text-align: center; color: #c62828; margin-bottom: 30px;">
+            <i class="fa-solid fa-circle-exclamation" style="font-size: 30px; margin-bottom: 10px;"></i>
+            <p>No order matching that Order ID was found. Please check the ID and try again.</p>
+        </div>
+
+        <!-- Order History List Section -->
+        <div class="form-card">
+            <h3 style="color: #880e4f; margin-bottom: 15px; font-size: 1.1rem; border-bottom: 2px solid #fce4ec; padding-bottom: 8px;">
+                <i class="fa-solid fa-clock-rotate-left"></i> Recent Order Tracking History
+            </h3>
+            <div id="globalOrderHistory">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blooms Flower Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function loadOrderHistory() {
+            const orders = JSON.parse(localStorage.getItem('bloomsOrders')) || [];
+            const historyContainer = document.getElementById('globalOrderHistory');
+            const currentUser = JSON.parse(localStorage.getItem('bloomsUser'));
+
+            if (orders.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #777; font-size: 14px; text-align: center;">No tracking history recorded yet. Place an order to start tracking!</p>';
+                return;
+            }
+
+            const filteredOrders = currentUser 
+                ? orders.filter(o => o.customerEmail === currentUser.email || o.customerName === currentUser.name)
+                : orders;
+
+            const listToDisplay = filteredOrders.length > 0 ? filteredOrders : orders;
+
+            historyContainer.innerHTML = listToDisplay.map(order => `
+                <div style="border-bottom: 1px solid #e0e0e0; padding: 12px 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #d81b60;">
+                        <span>Order #${order.id}</span>
+                        <span style="color: #777; font-weight: normal; font-size: 13px;">${order.date}</span>
+                    </div>
+                    <div style="font-size: 13px; margin: 6px 0; color: #444;">
+                        <strong>Customer:</strong> ${order.customerName || 'Customer'} | <strong>Items:</strong> ${order.items.map(i => `${i.name} (x${i.quantity || 1})`).join(', ')}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                        <span>Status: <strong style="color: #2e7d32; background: #e8f5e9; padding: 2px 6px; border-radius: 4px;"><i class="fa-solid fa-truck"></i> ${order.status}</strong></span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <strong style="color: #880e4f; font-size: 14px;">₱${order.total.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</strong>
+                            <button class="btn btn-secondary" style="padding: 3px 10px; font-size: 12px; margin: 0;" onclick="trackSpecificOrder('${order.id}')">Track</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function trackSpecificOrder(orderId) {
+            document.getElementById('order-id-input').value = orderId;
+            document.getElementById('trackOrderForm').dispatchEvent(new Event('submit'));
+            window.scrollTo({ top: 180, behavior: 'smooth' });
+        }
+
+        document.getElementById('trackOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchId = document.getElementById('order-id-input').value.trim().replace('#', '');
+            const orders = JSON.parse(localStorage.getItem('bloomsOrders')) || [];
+            
+            const match = orders.find(o => o.id.toString() === searchId);
+            const resultCard = document.getElementById('orderResultCard');
+            const noFoundCard = document.getElementById('noOrderFound');
+
+            if (match) {
+                noFoundCard.style.display = 'none';
+                resultCard.style.display = 'block';
+
+                document.getElementById('res-order-id').innerText = '#' + match.id;
+                document.getElementById('res-order-date').innerText = match.date;
+                document.getElementById('res-customer-name').innerText = match.customerName || 'Customer';
+                document.getElementById('res-customer-email').innerText = match.customerEmail || '';
+                document.getElementById('res-order-status').innerHTML = `<i class="fa-solid fa-truck"></i> ${match.status}`;
+                document.getElementById('res-order-total').innerText = '₱' + match.total.toLocaleString('en-PH', { minimumFractionDigits: 2 });
+
+                document.getElementById('res-order-items').innerHTML = match.items.map(item => `
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px;">
+                        <span>${item.name} (x${item.quantity || 1})</span>
+                        <strong>₱${(item.price * (item.quantity || 1)).toLocaleString('en-PH', { minimumFractionDigits: 2 })}</strong>
+                    </div>
+                `).join('');
+            } else {
+                resultCard.style.display = 'none';
+                noFoundCard.style.display = 'block';
+            }
+        });
+
+        loadOrderHistory();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

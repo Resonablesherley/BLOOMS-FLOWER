@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooms Flower Shop - Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="products.html"><i class="fa-solid fa-spa"></i> Products</a>
+        <a href="cart.html" class="active"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        <a href="orders.html"><i class="fa-solid fa-truck-ramp-box"></i> Track Order</a>
+        <a href="login.html"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+        <a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+    </nav>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-cart-shopping"></i> Your Shopping Cart</h1>
+        <p class="subtitle"><i class="fa-solid fa-truck-fast"></i> Free shipping on orders over ₱2,500!</p>
+
+        <div class="cart-layout">
+            <div id="cart-list" class="cart-items">
+                <!-- Cart items populated via JavaScript -->
+            </div>
+
+            <div class="cart-summary">
+                <h2><i class="fa-solid fa-receipt"></i> Order Summary</h2>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₱0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping:</span>
+                    <span id="shipping">₱0.00</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total:</span>
+                    <span id="grand-total">₱0.00</span>
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 15px;" onclick="checkout()"><i class="fa-solid fa-credit-card"></i> Checkout</button>
+                <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="clearCart()"><i class="fa-solid fa-trash-can"></i> Clear Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Blooms Flower Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function renderCart() {
+            const cartList = document.getElementById('cart-list');
+            const cart = JSON.parse(localStorage.getItem('bloomsCart')) || [];
+
+            if (cart.length === 0) {
+                cartList.innerHTML = `<div class="cart-card"><p><i class="fa-solid fa-basket-shopping" style="font-size: 24px; color: #d81b60; margin-right: 8px;"></i> Your cart is currently empty. <a href="products.html" style="color: #d81b60; font-weight: bold;">Shop now</a></p></div>`;
+                document.getElementById('subtotal').innerText = '₱0.00';
+                document.getElementById('shipping').innerText = '₱0.00';
+                document.getElementById('grand-total').innerText = '₱0.00';
+                return;
+            }
+
+            let subtotal = 0;
+            cartList.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const qty = item.quantity || 1;
+                const itemTotal = item.price * qty;
+                subtotal += itemTotal;
+                const imageSrc = item.image || 'image_6fb81b.jpg';
+
+                cartList.innerHTML += `
+                    <div class="cart-card">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="${imageSrc}" alt="${item.name}" class="cart-thumb">
+                            <div class="cart-card-info">
+                                <h3>${item.name}</h3>
+                                <p><i class="fa-solid fa-wand-magic-sparkles"></i> Handcrafted Arrangement</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-weight: bold; display: block; margin-bottom: 5px; color: #d81b60;">
+                                ₱${itemTotal.toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                            </span>
+                            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin-bottom: 8px;">
+                                <button class="btn btn-secondary" style="padding: 2px 8px; margin: 0;" onclick="changeQuantity(${index}, -1)"><i class="fa-solid fa-minus"></i></button>
+                                <span style="padding: 0 8px; font-weight: bold;">${qty}</span>
+                                <button class="btn btn-secondary" style="padding: 2px 8px; margin: 0;" onclick="changeQuantity(${index}, 1)"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            <button class="btn btn-secondary" style="padding: 5px 12px; font-size: 12px; margin: 0;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i> Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const shipping = (subtotal >= 2500 || subtotal === 0) ? 0 : 150;
+            const grandTotal = subtotal + shipping;
+
+            document.getElementById('subtotal').innerText = `₱${subtotal.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`;
+            document.getElementById('shipping').innerText = shipping === 0 ? 'FREE' : `₱${shipping.toFixed(2)}`;
+            document.getElementById('grand-total').innerText = `₱${grandTotal.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`;
+        }
+
+        function changeQuantity(index, amount) {
+            let cart = JSON.parse(localStorage.getItem('bloomsCart')) || [];
+            if (!cart[index].quantity) cart[index].quantity = 1;
+
+            cart[index].quantity += amount;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            localStorage.setItem('bloomsCart', JSON.stringify(cart));
+            renderCart();
+            if (typeof updateCartBadge === 'function') updateCartBadge();
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('bloomsCart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('bloomsCart', JSON.stringify(cart));
+            renderCart();
+            if (typeof updateCartBadge === 'function') updateCartBadge();
+        }
+
+        function clearCart() {
+            localStorage.removeItem('bloomsCart');
+            renderCart();
+            if (typeof updateCartBadge === 'function') updateCartBadge();
+        }
+
+        function checkout() {
+            const cart = JSON.parse(localStorage.getItem('bloomsCart')) || [];
+            if (cart.length === 0) {
+                showCenterToast('<i class="fa-solid fa-circle-exclamation" style="color: #e53935; margin-right: 8px;"></i> Your cart is currently empty!');
+                return;
+            }
+
+            const currentUser = JSON.parse(localStorage.getItem('bloomsUser'));
+            
+            let subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+            let shipping = (subtotal >= 2500 || subtotal === 0) ? 0 : 150;
+            let grandTotal = subtotal + shipping;
+
+            const newOrder = {
+                id: Math.floor(100000 + Math.random() * 900000),
+                customerEmail: currentUser ? currentUser.email : 'guest@blooms.com',
+                customerName: currentUser ? currentUser.name : 'Guest Customer',
+                items: cart,
+                total: grandTotal,
+                date: new Date().toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' }),
+                status: 'Processing & Preparing'
+            };
+
+            let orders = JSON.parse(localStorage.getItem('bloomsOrders')) || [];
+            orders.unshift(newOrder);
+            localStorage.setItem('bloomsOrders', JSON.stringify(orders));
+
+            showCenterToast(`<i class="fa-solid fa-circle-check" style="color: #4caf50;"></i> Thank you! Order #${newOrder.id} placed successfully.`);
+            clearCart();
+            setTimeout(() => {
+                window.location.href = 'orders.html';
+            }, 1200);
+        }
+
+        renderCart();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
